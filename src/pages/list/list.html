@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Setting</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">Setting Url Server :</ion-label>
+      <ion-input [(ngModel)]="id_server" placeholder="Text Input"></ion-input>
+    </ion-item>
+    <button ion-button (click)="presentConfirm()">Done</button>
+
+  </ion-list>
+</ion-content>

@@ -1,0 +1,51 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content>
+  <!-- <button ion-button (click)="processCapture()">Snap Photo</button>
+  <br> -->
+  <button *ngIf="checkCordova" ion-button (click)="service.startListening()">Start Listening</button>
+  <br>
+  <!-- <button ion-button (click)="stopListening()">Stop Listening</button> -->
+  <!-- <br> {{matches}} -->
+
+  <canvas [hidden]="true" id="canvas" class="video"></canvas>
+
+  <video id="video" #video class="video"></video>
+  <!-- <ion-item>
+    <ion-label>audioInputSelect</ion-label>
+    <ion-select (ngModelChange)="getAudio()" [(ngModel)]="constraints.audio">
+      <ion-option [value]="false"> NONE </ion-option>
+      <ion-option *ngFor="let item of device.audioInputSelect" [value]="item.deviceId">
+        {{item.text}}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>audioOutputSelect</ion-label>
+    <ion-select>
+      <ion-option *ngFor="let item of device.audioOutputSelect" [value]="item.deviceId">
+        {{item.text}}
+      </ion-option>
+    </ion-select>
+  </ion-item> -->
+  <ion-item *ngIf="device.videoSelect.length > 1">
+    <ion-label>videoSelect</ion-label>
+    <ion-select (ngModelChange)="getVideo()" [(ngModel)]="constraints.video">
+      <ion-option *ngFor="let item of device.videoSelect" [value]="item.deviceId">
+        {{item.text}}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+  <!-- <video id="video" width="640" height="480" autoplay></video> -->
+  <!-- <input (change)="changeImage($event)" id="profile-image-upload" class="hidden" type="file">
+  <label for="profile-image-upload">
+    click here to change profile image
+  </label> -->
+</ion-content>
