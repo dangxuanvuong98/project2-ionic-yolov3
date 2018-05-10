@@ -63,13 +63,23 @@ export class HomeService {
     }
     public uploadBlob(file, params: object, type?: string, options?: any) {
         const formData: FormData = new FormData();
-        formData.append('image', file, file.name);
+        formData.append('image', file);
         // formData.append('file', file, file.name);
-        return this.upload(formData);
+        return this.upload('polls/process', formData);
     }
 
-    upload(formData) {
-        var host = 'http://' + localStorage.getItem('id_server');
+    uploadListBlob(listFile) {
+        const formData: FormData = new FormData();
+        for (let i = 0; i < listFile.length; i++) {
+            formData.append('image' + (i + 1), listFile[i]);
+        }
+        // formData.append('image', file, file.name);
+        // formData.append('file', file, file.name);
+        return this.upload('polls/distance', formData);
+    }
+
+    upload(url, formData) {
+        var host = 'http://' + localStorage.getItem('id_server') + url;
         // const headers = new Headers();
         // headers.append('Content-Type', 'multipart/form-data');
         // headers.append('Accept', 'application/json');
@@ -83,6 +93,6 @@ export class HomeService {
         console.log(file);
         const formData: FormData = new FormData();
         formData.append('image', file, file.name);
-        return this.upload(formData);
+        return this.upload('', formData);
     }
 }

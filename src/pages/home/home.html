@@ -8,16 +8,15 @@
 </ion-header> -->
 
 <ion-content>
+  <!-- <ion-content (swipeleft)="changeCam()" (dblclick)="changeStatus()"> -->
   <!-- <button ion-button (click)="processCapture()">Snap Photo</button>
   <br> -->
-  <button *ngIf="checkCordova" ion-button (click)="service.startListening()">Start Listening</button>
-  <br>
   <!-- <button ion-button (click)="stopListening()">Stop Listening</button> -->
   <!-- <br> {{matches}} -->
 
   <canvas [hidden]="true" id="canvas" class="video"></canvas>
 
-  <video id="video" #video class="video"></video>
+  <video (swipeleft)="changeCam()" (swiperight)="changeStatus()" (dblclick)="processCapture()" id="video" #video class="video"></video>
   <!-- <ion-item>
     <ion-label>audioInputSelect</ion-label>
     <ion-select (ngModelChange)="getAudio()" [(ngModel)]="constraints.audio">
@@ -35,6 +34,15 @@
       </ion-option>
     </ion-select>
   </ion-item> -->
+
+  <hr>
+  <button *ngIf="checkCordova" ion-button (click)="service.startListening()">Start Listening</button>
+  <hr>
+  <button *ngIf="checkCordova" ion-button (click)="changeCam()">Change Camera</button>
+  <hr>
+  <button *ngIf="checkCordova" ion-button (click)="changeStatus()">Change Status</button>
+  <br>
+
   <ion-item *ngIf="device.videoSelect.length > 1">
     <ion-label>videoSelect</ion-label>
     <ion-select (ngModelChange)="getVideo()" [(ngModel)]="constraints.video">

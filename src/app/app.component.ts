@@ -65,19 +65,39 @@ export class MyApp {
   }
 
   getPermissionCamera() {
+    // this.androidPermissions.requestPermissions(
+    //   [
+    //     this.androidPermissions.PERMISSION.CAMERA,
+    //     this.androidPermissions.PERMISSION.GET_ACCOUNTS
+    //   ]
+    // ).then((success) => {
+    // }, err => {
+    //   console.log("----------3", err);
+    // })
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
       result => {
         console.log("permission", result);
         if (!result.hasPermission)
-          this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.CAMERA, this.androidPermissions.PERMISSION.GET_ACCOUNTS]).then((success) => {
+          this.androidPermissions.requestPermissions(
+            [
+              this.androidPermissions.PERMISSION.CAMERA,
+              this.androidPermissions.PERMISSION.GET_ACCOUNTS
+            ]
+          ).then((success) => {
           }, err => {
             console.log("----------3", err);
           })
       },
-      err => this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.CAMERA, this.androidPermissions.PERMISSION.GET_ACCOUNTS]).then((success) => {
-      }, err => {
-        console.log("----------3", err);
-      })
+      err =>
+        this.androidPermissions.requestPermissions(
+          [
+            this.androidPermissions.PERMISSION.CAMERA,
+            this.androidPermissions.PERMISSION.GET_ACCOUNTS
+          ]
+        ).then((success) => {
+        }, err => {
+          console.log("----------3", err);
+        })
     );
   }
 

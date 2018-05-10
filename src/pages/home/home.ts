@@ -13,9 +13,12 @@ export class HomePage {
     video: false
   };
   imageBlob: any;
+  number_for_camera = 0;;
+  statusAuto = false;
   checkCordova;
   matches;
   isRecording;
+  groupImage = [];
   private isFirefox = (navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
   constructor(public navCtrl: NavController,
     private platform: Platform,
@@ -33,7 +36,45 @@ export class HomePage {
     } else {
       this.checkCordova = false;
     }
+    // this.getPermissionCamera();
     this.getListPermission();
+  }
+
+  changeCam() {
+    this.number_for_camera++;
+    if (this.number_for_camera == this.device.videoSelect.length) {
+      this.number_for_camera = 0;
+    }
+    this.constraints.video = this.device.videoSelect[this.number_for_camera].deviceId;
+    console.log(this.device.videoSelect[this.number_for_camera].deviceId);
+    this.getVideo();
+    if (this.checkCordova) {
+      this.service.textToSpeech("chuyển camera thành công")
+        .then(() => {
+          // this.processCapture();
+        })
+        .catch((reason: any) => console.log(reason));
+    }
+  }
+
+  changeStatus() {
+    console.log("22222222222");
+    this.groupImage = [];
+    this.statusAuto = !this.statusAuto;
+    var text;
+    if (this.statusAuto) {
+      text = "bạn đang ở trạng thái tự động"
+    } else {
+      text = "bạn đang ở trạng thái thủ công"
+    }
+    if (this.checkCordova) {
+      this.service.textToSpeech(text)
+        .then(() => {
+          if (this.statusAuto)
+            this.processCapture();
+        })
+        .catch((reason: any) => console.log(reason));
+    }
   }
 
   getListPermission() {
@@ -95,7 +136,7 @@ export class HomePage {
   }
 
   userMedia(constraints) {
-    let self = this;
+    // let self = this;
     console.log("media", constraints);
     navigator.mediaDevices.getUserMedia(constraints).then(stream => {
       var video = document.querySelector('video');
@@ -103,13 +144,12 @@ export class HomePage {
       this.video.nativeElement.srcObject = stream;
       video.onloadedmetadata = function (e) {
         video.play();
-        self.processCapture();
+        // self.processCapture();
       };
     }).catch(err => {
       console.log("err", err);
     });
   }
-
 
   processCapture() {
     // this.video.nativeElement.pause();
@@ -135,14 +175,65 @@ export class HomePage {
     this.imageBlob = this.service.b64toBlob(dataImage, 'image/jpeg', null);
 
     this.imageBlob = new File([this.imageBlob], "profile.jpeg");
+    console.log("trong", this.statusAuto);
+    if (this.statusAuto) {
+      this.callApi();
+    } else {
+      this.takeDistance();
+    }
+  }
+
+  takeDistance() {
+    if (this.checkCordova) {
+      var text;
+      this.groupImage.push(this.imageBlob);
+
+      if (this.groupImage.length == 1) {
+        text = "chụp bức ảnh đầu tiên thành công, bạn vui lòng chụp bức ảnh thứ hai";
+      } else if (this.groupImage.length == 2) {
+        text = "chụp bức ảnh thứ hai thành công, bạn có thể chuyển qua chế độ tự động";
+      }
+      this.service.textToSpeech(text)
+        .then(() => {
+          if (this.groupImage.length == 2) {
+            this.service.uploadListBlob(this.groupImage).subscribe((data: any) => {
+              // var text = data._body;
+              this.service.textToSpeech(data._body)
+                .then(() => {
+                  this.groupImage = [];
+                  // if (this.statusAuto)
+                  // this.processCapture();
+                })
+                .catch((reason: any) => {
+                  this.groupImage = [];
+                  console.log(reason)
+                });
+            }, err => {
+              console.log("err", err);
+              this.groupImage = [];
+            })
+          }
+          // this.processCapture();
+        })
+        .catch((reason: any) => {
+          this.groupImage = [];
+          console.log(reason)
+        });
+    }
+  }
+
+  callApi() {
     this.service.uploadBlob(this.imageBlob, null).subscribe((data: any) => {
       var text = data._body;
       console.log(text);
-      this.service.textToSpeech(text)
-        .then(() => {
-          this.processCapture();
-        })
-        .catch((reason: any) => console.log(reason));
+      if (this.checkCordova) {
+        this.service.textToSpeech(text)
+          .then(() => {
+            if (this.statusAuto)
+              this.processCapture();
+          })
+          .catch((reason: any) => console.log(reason));
+      }
     }, err => {
       console.log(err);
     });
