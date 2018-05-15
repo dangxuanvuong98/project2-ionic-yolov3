@@ -34,23 +34,19 @@
       </ion-option>
     </ion-select>
   </ion-item> -->
+  <button style="float: left" *ngIf="true" ion-button (click)="changeCam()">Change Camera</button>
 
-  <hr>
-  <button *ngIf="checkCordova" ion-button (click)="service.startListening()">Start Listening</button>
-  <hr>
-  <button *ngIf="checkCordova" ion-button (click)="changeCam()">Change Camera</button>
-  <hr>
-  <button *ngIf="checkCordova" ion-button (click)="changeStatus()">Change Status</button>
-  <br>
+  <button style="float: right;" *ngIf="true" ion-button (click)="changeStatus()">Change Status</button>
 
-  <ion-item *ngIf="device.videoSelect.length > 1">
+
+  <!-- <ion-item *ngIf="device.videoSelect.length > 1">
     <ion-label>videoSelect</ion-label>
     <ion-select (ngModelChange)="getVideo()" [(ngModel)]="constraints.video">
       <ion-option *ngFor="let item of device.videoSelect" [value]="item.deviceId">
         {{item.text}}
       </ion-option>
     </ion-select>
-  </ion-item>
+  </ion-item> -->
   <!-- <video id="video" width="640" height="480" autoplay></video> -->
   <!-- <input (change)="changeImage($event)" id="profile-image-upload" class="hidden" type="file">
   <label for="profile-image-upload">

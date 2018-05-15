@@ -8,6 +8,7 @@ export class ListPage {
   selectedItem: any;
   icons: string[];
   id_server;
+  id_server_2;
   items: Array<{ title: string, note: string, icon: string }>;
 
   constructor(public navCtrl: NavController,
@@ -26,7 +27,7 @@ export class ListPage {
   presentConfirm() {
     let alert = this.alertCtrl.create({
       title: 'Confirm purchase',
-      message: 'Do you want to buy this book?',
+      message: 'ARE YOU SURE?',
       buttons: [
         {
           text: 'Cancel',
@@ -46,11 +47,43 @@ export class ListPage {
     alert.present();
   }
 
+  presentConfirm2() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm purchase',
+      message: 'ARE YOU SURE?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.getID_2();
+          }
+        },
+        {
+          text: 'Done',
+          handler: () => {
+            this.setID_2(this.id_server_2);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   getID() {
     this.id_server = localStorage.getItem('id_server');
   }
 
   setID(id) {
     localStorage.setItem("id_server", id)
+  }
+
+
+  getID_2() {
+    this.id_server_2 = localStorage.getItem('id_server_2');
+  }
+
+  setID_2(id) {
+    localStorage.setItem("id_server_2", id)
   }
 }

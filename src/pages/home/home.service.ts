@@ -65,7 +65,7 @@ export class HomeService {
         const formData: FormData = new FormData();
         formData.append('image', file);
         // formData.append('file', file, file.name);
-        return this.upload('polls/process', formData);
+        return this.upload(localStorage.getItem('id_server'), formData);
     }
 
     uploadListBlob(listFile) {
@@ -75,11 +75,12 @@ export class HomeService {
         }
         // formData.append('image', file, file.name);
         // formData.append('file', file, file.name);
-        return this.upload('polls/distance', formData);
+
+        return this.upload(localStorage.getItem('id_server_2'), formData);
     }
 
     upload(url, formData) {
-        var host = 'http://' + localStorage.getItem('id_server') + url;
+        var host = 'http://' + url;
         // const headers = new Headers();
         // headers.append('Content-Type', 'multipart/form-data');
         // headers.append('Accept', 'application/json');

@@ -191,7 +191,7 @@ export class HomePage {
       if (this.groupImage.length == 1) {
         text = "chụp bức ảnh đầu tiên thành công, bạn vui lòng chụp bức ảnh thứ hai";
       } else if (this.groupImage.length == 2) {
-        text = "chụp bức ảnh thứ hai thành công, bạn có thể chuyển qua chế độ tự động";
+        text = "chụp bức ảnh thứ hai thành công";
       }
       this.service.textToSpeech(text)
         .then(() => {

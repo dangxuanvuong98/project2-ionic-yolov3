@@ -10,10 +10,18 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label color="primary">Setting Url Server :</ion-label>
+      <ion-label color="primary">Setting Url Server Auto :</ion-label>
       <ion-input [(ngModel)]="id_server" placeholder="Text Input"></ion-input>
     </ion-item>
     <button ion-button (click)="presentConfirm()">Done</button>
+
+  </ion-list>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">Setting Url Server Handmade :</ion-label>
+      <ion-input [(ngModel)]="id_server_2" placeholder="Text Input"></ion-input>
+    </ion-item>
+    <button ion-button (click)="presentConfirm2()">Done</button>
 
   </ion-list>
 </ion-content>
